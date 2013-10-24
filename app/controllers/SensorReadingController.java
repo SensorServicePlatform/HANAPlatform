@@ -300,12 +300,17 @@ public class SensorReadingController extends Controller {
 
 	}	
 	public static Result lastestReadingFromAllDevices(String sensorType, String format) {
-	
+		if(!testDBHandler()){
+			return internalServerError("database conf file not found");
+		}
 		String dateFormat = getDateFormat();
 
 		response().setHeader("Access-Control-Allow-Origin", "*");
 		checkDao();
-		List<SensorReading> readings = sensorReadingDao.lastestReadingFromAllDevices(sensorType);
+//		List<SensorReading> readings = sensorReadingDao.lastestReadingFromAllDevices(sensorType);
+		
+		ArrayList<models.SensorReading> readings = dbHandler.lastestReadingFromAllDevices(sensorType);
+
 		if(readings == null || readings.isEmpty()){
 			return notFound("no reading found");
 		}
