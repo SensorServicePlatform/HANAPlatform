@@ -153,6 +153,94 @@ public class MetadataController extends Controller {
 			return ok("some sensors not saved: " + error.toString());
 		}
 	}
+	
+	public static Result deleteSensorType(String sensorType) {
+		if(!testDBHandler()){
+			return internalServerError("database conf file not found");
+		}
+		
+		boolean result = dbHandler.deleteSensorType(sensorType);
+
+		ArrayList<String> error = new ArrayList<String>();
+		if(!result){
+			error.add(sensorType);
+		}
+
+		if(error.size() == 0){
+			System.out.println("sensor type deleted");
+			return ok("sensor type deleted");
+		}
+		else{
+			System.out.println("sensor type not deleted: " + error.toString());
+			return ok("sensor type not deleted: " + error.toString());
+		}
+	}
+	
+	public static Result deleteSensor(String printName) {
+		if(!testDBHandler()){
+			return internalServerError("database conf file not found");
+		}
+		
+		boolean result = dbHandler.deleteSensor(printName);
+
+		ArrayList<String> error = new ArrayList<String>();
+		if(!result){
+			error.add(printName);
+		}
+
+		if(error.size() == 0){
+			System.out.println("sensor deleted");
+			return ok("sensor deleted");
+		}
+		else{
+			System.out.println("sensor not deleted: " + error.toString());
+			return ok("sensor not deleted: " + error.toString());
+		}
+	}
+
+	public static Result deleteDeviceType(String deviceTypeName) {
+		if(!testDBHandler()){
+			return internalServerError("database conf file not found");
+		}
+		
+		boolean result = dbHandler.deleteDeviceType(deviceTypeName);
+
+		ArrayList<String> error = new ArrayList<String>();
+		if(!result){
+			error.add(deviceTypeName);
+		}
+
+		if(error.size() == 0){
+			System.out.println("device type deleted");
+			return ok("device type deleted");
+		}
+		else{
+			System.out.println("device type not deleted: " + error.toString());
+			return ok("device type not deleted: " + error.toString());
+		}
+	}
+
+	public static Result deleteDevice(String networkAddress) {
+		if(!testDBHandler()){
+			return internalServerError("database conf file not found");
+		}
+		
+		boolean result = dbHandler.deleteDevice(networkAddress);
+
+		ArrayList<String> error = new ArrayList<String>();
+		if(!result){
+			error.add(networkAddress);
+		}
+
+		if(error.size() == 0){
+			System.out.println("device deleted");
+			return ok("device deleted");
+		}
+		else{
+			System.out.println("device not deleted: " + error.toString());
+			return ok("device not deleted: " + error.toString());
+		}
+	}
 	// query for readings
 	public static Result sql_query(){
 		String resultStr = "";
@@ -189,4 +277,5 @@ public class MetadataController extends Controller {
 		return ok(ret);
 	}
 
+	
 }

@@ -269,6 +269,106 @@ public class DBHandler {
 		}
 	}
 	
+	public boolean deleteSensorType(String sensorType) {
+		Connection connection = getConnection();
+		if (connection == null) return false;
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = connection.prepareStatement("DELETE FROM CMU.NEW_SENSOR_TYPES WHERE SENSOR_CATEGORY = ?");
+			preparedStatement.setString(1, sensorType);
+			preparedStatement.executeUpdate();
+			connection.close();
+			//System.out.println("Connection closed.");
+			return true;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			ALogger log = play.Logger.of(DBHandler.class);
+			log.warn(e.getMessage());
+			return false;
+		}	finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean deleteSensor(String printName) {
+		Connection connection = getConnection();
+		if (connection == null) return false;
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = connection.prepareStatement("DELETE FROM CMU.NEW_SENSORS WHERE PRINT_NAME = ?");
+			preparedStatement.setString(1, printName);
+			preparedStatement.executeUpdate();
+			connection.close();
+			//System.out.println("Connection closed.");
+			return true;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			ALogger log = play.Logger.of(DBHandler.class);
+			log.warn(e.getMessage());
+			return false;
+		}	finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean deleteDeviceType(String deviceTypeName) {
+		Connection connection = getConnection();
+		if (connection == null) return false;
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = connection.prepareStatement("DELETE FROM CMU.NEW_DEVICE_TYPES WHERE DEVICE_TYPE_NAME = ?");
+			preparedStatement.setString(1, deviceTypeName);
+			preparedStatement.executeUpdate();
+			connection.close();
+			//System.out.println("Connection closed.");
+			return true;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			ALogger log = play.Logger.of(DBHandler.class);
+			log.warn(e.getMessage());
+			return false;
+		}	finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean deleteDevice(String networkAddress) {
+		Connection connection = getConnection();
+		if (connection == null) return false;
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = connection.prepareStatement("DELETE FROM CMU.NEW_DEVICES WHERE network_address = ?");
+			preparedStatement.setString(1, networkAddress);
+			preparedStatement.executeUpdate();
+			connection.close();
+			//System.out.println("Connection closed.");
+			return true;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			ALogger log = play.Logger.of(DBHandler.class);
+			log.warn(e.getMessage());
+			return false;
+		}	finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public ArrayList<String> getSensorType(String deviceType){
 		Connection connection = getConnection();
 		try{
