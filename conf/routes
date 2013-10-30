@@ -43,6 +43,11 @@ POST	/add_sensor				  controllers.MetadataController.addSensor()
 POST	/add_device_type 			controllers.MetadataController.addDeviceType()
 POST	/add_device 			controllers.MetadataController.addDevice()
 
+GET	/delete_sensor_type/:sensor_type				  controllers.MetadataController.deleteSensorType(sensor_type: String)
+GET	/delete_sensor/:print_name				  controllers.MetadataController.deleteSensor(print_name: String)
+GET	/delete_device_type/:device_type_name 			controllers.MetadataController.deleteDeviceType(device_type_name: String)
+GET	/delete_device/:network_address 			controllers.MetadataController.deleteDevice(network_address: String)
+
 # WorkFlow
 POST	/workflow/							controllers.WorkFlowRunnerController.changeInterval()
 GET		/workflow/							controllers.WorkFlowRunnerController.index(format:String = "html")
