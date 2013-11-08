@@ -383,14 +383,6 @@ public class DBHandler {
 				sensorTypes.add(new String(rs_sensorType));
 			}
 
-			// get another table the new sensor types
-			preparedStatement2 = connection.prepareStatement("SELECT \"SENSOR_TYPE\" FROM CMU.NEW_SENSOR_TYPES WHERE DEVICE_TYPE=?");
-			preparedStatement2.setString(1,deviceType);
-			ResultSet resultSet2 = preparedStatement2.executeQuery();
-			while(resultSet.next()){
-				sensorTypes.add(resultSet2.getString(1));
-			}
-
 			connection.close();
 			//System.out.println("Connection closed.");
 			return sensorTypes;
