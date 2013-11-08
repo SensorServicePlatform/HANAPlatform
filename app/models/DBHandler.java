@@ -246,7 +246,7 @@ public class DBHandler {
 		if (connection == null) return false;
 		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = connection.prepareStatement("INSERT INTO CMU.DEVICE(DEVICEID, DEVICETYPE, DEVICEAGENT, LOCATION) VALUES(?, ?, ?, ?)");
+			preparedStatement = connection.prepareStatement("INSERT INTO CMU.NEW_DEVICES(DEVICEID, DEVICETYPE, DEVICEAGENT, LOCATION) VALUES(?, ?, ?, ?)");
 			preparedStatement.setString(1, deviceId);
 			preparedStatement.setString(2, deviceType);
 			preparedStatement.setString(3, deviceAgent);
@@ -382,6 +382,15 @@ public class DBHandler {
 				String rs_sensorType = resultSet.getString(1);
 				sensorTypes.add(new String(rs_sensorType));
 			}
+
+			// get another table the new sensor types
+			preparedStatement2 = connection.prepareStatement("SELECT \"SENSOR_TYPE\" FROM CMU.NEW_SENSOR_TYPES WHERE DEVICE_TYPE=?");
+			preparedStatement2.setString(1.deviceType);
+			ResultSet resultSet2 = preparedStatement2.executeQuery();
+			while(resultSet.next()){
+				sensorTypes.add(resultSet2.getString(1));
+			}
+
 			connection.close();
 			//System.out.println("Connection closed.");
 			return sensorTypes;
