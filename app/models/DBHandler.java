@@ -373,14 +373,22 @@ public class DBHandler {
 		Connection connection = getConnection();
 		try{
 			if (connection == null) return null;
-			PreparedStatement preparedStatement;
+			PreparedStatement preparedStatement,preparedStatement_new_table;
 			preparedStatement = connection.prepareStatement("SELECT \"SENSOR_TYPE\" FROM CMU.SENSOR_TYPE WHERE DEVICE_TYPE=?");
+			preparedStatement_new_table = connection.prepareStatement("SELECT \"SENSOR_CATEGORY\" FROM CMU.NEW_SENSOR_TYPEs WHERE DEVICE_TYPE=?");
 			preparedStatement.setString(1, deviceType);
+			preparedStatement_new_table.setString(1, deviceType);
+			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			ArrayList<String> sensorTypes = new ArrayList<String>();			
 			while(resultSet.next()){			
 				String rs_sensorType = resultSet.getString(1);
 				sensorTypes.add(new String(rs_sensorType));
+			}
+
+			resultSet = preparedStatement_new_table.executeQuery();
+			while(resultSet.next()){
+				sensorTypes.add(new String(resultSet.getString(1)));
 			}
 
 			connection.close();
