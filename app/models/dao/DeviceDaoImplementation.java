@@ -4,6 +4,10 @@ import java.util.List;
 
 import models.Device;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
 import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
@@ -19,7 +23,19 @@ public class DeviceDaoImplementation implements DeviceDao{
 		final String SQL = "SELECT \"DEVICEID\", \"DEVICETYPE\", \"DEVICEAGENT\", \"LOCATION\" FROM CMU.DEVICE";
 		final String NEW_SQL = "SELECT \"URI\", \"DEVICE_TYPE\", \"DEVICE_AGENT\", \"LOCATION_DESCRIPTION\" FROM CMU.NEW_DEVICES";
 		List<Device> devices = simpleJdbcTemplate.query(SQL, ParameterizedBeanPropertyRowMapper.newInstance(Device.class));
-		devices.addAll(simpleJdbcTemplate.query(NEW_SQL, ParameterizedBeanPropertyRowMapper.newInstance(Device.class)));
+		devices.addAll(simpleJdbcTemplate.query(NEW_SQL, new ParameterizedBeanPropertyRowMapper<Device>(){
+
+			@Override
+			public Device mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Device device = new Device();
+				device.setDeviceId(rs.getString("URI"));
+				device.setDeviceType(rs.getString("DEVICE_TYPE"));
+				device.setDeviceAgent(rs.getString("DEVICE_AGENT"));
+				device.setLocation(rs.getString("LOCATION_DESCRIPTION"));
+				return device;
+			}
+
+		}));
 		return devices;
 	}
 
