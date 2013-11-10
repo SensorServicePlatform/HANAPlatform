@@ -750,11 +750,11 @@ public class DBHandler {
 				return null;
 			PreparedStatement preparedStatement;
 			preparedStatement = connection
-					.prepareStatement("SELECT date, startTime, endTime, eventTypeName, eventRecord "
+					.prepareStatement("SELECT event.date, event.startTime, event.endTime, eventType.eventTypeName, event.eventRecord "
 							+ "FROM CMU.event as event inner join cmu.eventType as eventType "
 							+ "on event.eventTypeId = eventType.eventTypeId"
-							+ "WHERE userId=? AND eventTypeId=? "
-							+ "AND date > ? AND date <= ? ORDER BY date DSC");
+							+ "WHERE event.userId=? AND event.eventTypeId=? "
+							+ "AND event.date > ? AND event.date <= ? ORDER BY event.date DSC");
 			preparedStatement.setString(1, userId);
 			preparedStatement.setString(2, eventTypeId);
 			preparedStatement.setString(3, startDate);
