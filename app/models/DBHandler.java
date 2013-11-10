@@ -752,9 +752,9 @@ public class DBHandler {
 			preparedStatement = connection
 					.prepareStatement("SELECT event.date, event.startTime, event.endTime, eventType.eventTypeName, event.eventRecord "
 							+ "FROM CMU.event as event inner join cmu.eventType as eventType "
-							+ "on event.eventTypeId = eventType.eventTypeId"
+							+ "on event.eventTypeId = eventType.eventTypeId "
 							+ "WHERE event.userId=? AND event.eventTypeId=? "
-							+ "AND event.date > ? AND event.date <= ? ORDER BY event.date DSC");
+							+ "AND event.date > ? AND event.date <= ? ORDER BY event.date DESC ");
 			preparedStatement.setString(1, userId);
 			preparedStatement.setString(2, eventTypeId);
 			preparedStatement.setString(3, startDate);
