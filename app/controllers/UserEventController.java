@@ -36,6 +36,32 @@ public class UserEventController extends Controller {
 		return true;
 	}
 
+	public static Result getUserEventHistory(String userId, String eventTypeId,
+			String startDate, String endDate) {
+		if (!testDBHandler()) {
+			return internalServerError("database conf file not found");
+		}
+		response().setHeader("Access-Control-Allow-Origin", "*");
+		// checkDao();
+		List<Event> events = dbHandler.getUserEventHistory(userId, eventTypeId,
+				startDate, endDate);
+		if (events == null || events.isEmpty()) {
+			return notFound("no devices found");
+		}
+		String ret = new String();
+
+		for (models.Event event : events) {
+			if (ret.isEmpty())
+				ret += "[";
+			else
+				ret += ',';
+			ret += event.toJSONString();
+		}
+		ret += "]";
+
+		return ok(ret);
+	}
+
 	public static Result recordEvent() {
 		JsonNode json = request().body().asJson();
 		if (json == null) {
@@ -53,10 +79,11 @@ public class UserEventController extends Controller {
 		String endTime = json.findPath("endTime").getTextValue();
 		String eventRecord = json.findPath("eventRecord").getTextValue();
 
-		models.Event event = new Event(userId, eventTypeId, dateString, startTime, endTime, eventRecord);
-		
+		models.Event event = new Event(userId, eventTypeId, dateString,
+				startTime, endTime, eventRecord);
+
 		System.out.println(event.toJSONString());
-		
+
 		ArrayList<String> error = new ArrayList<String>();
 
 		boolean result = dbHandler.recordEvent(event);

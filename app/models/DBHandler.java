@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import play.Logger.ALogger;
@@ -721,7 +722,7 @@ public class DBHandler {
 			preparedStatement.setString(4, event.getStartTime());
 			preparedStatement.setString(5, event.getEndTime());
 			preparedStatement.setString(6, event.getEventRecord());
-			
+
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");
@@ -731,6 +732,56 @@ public class DBHandler {
 			ALogger log = play.Logger.of(DBHandler.class);
 			log.warn(e.getMessage());
 			return false;
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public List<Event> getUserEventHistory(String userId, String eventTypeId,
+			String startDate, String endDate) {
+		// TODO Auto-generated method stub
+		Connection connection = getConnection();
+		try {
+			if (connection == null)
+				return null;
+			PreparedStatement preparedStatement;
+			preparedStatement = connection
+					.prepareStatement("SELECT date, startTime, endTime, eventTypeName, eventRecord "
+							+ "FROM CMU.event as event inner join cmu.eventType as eventType "
+							+ "on event.eventTypeId = eventType.eventTypeId"
+							+ "WHERE userId=? AND eventTypeId=? "
+							+ "AND date > ? AND date <= ? ORDER BY date DSC");
+			preparedStatement.setString(1, userId);
+			preparedStatement.setString(2, eventTypeId);
+			preparedStatement.setString(3, startDate);
+			preparedStatement.setString(4, endDate);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			List<Event> events = new ArrayList<Event>();
+
+			while (resultSet.next()) {
+				String dateString = resultSet.getString(1);
+				String startTime = resultSet.getString(2);
+				String endTime = resultSet.getString(3);
+				String eventTypeName = resultSet.getString(4);
+				String eventRecord = resultSet.getString(5);
+				if (eventTypeName==null || eventTypeName=="") {
+					continue;
+				}
+				events.add(new Event(userId, eventTypeId, dateString,
+						startTime, endTime, eventRecord, eventTypeName));
+			}
+
+			connection.close();
+			// System.out.println("Connection closed.");
+			return events;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		} finally {
 			try {
 				connection.close();

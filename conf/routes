@@ -54,7 +54,7 @@ GET		/workflow/							controllers.WorkFlowRunnerController.index(format:String =
 GET		/workflow.json						controllers.WorkFlowRunnerController.index(format:String = "json")
 
 # UserEvent
-#GET		/getUserEventHistory/:userId/:eventTypeId/:startTime/:endTime	controllers.UserEventController.getUserEventHistory(userId:String,eventTypeId:String,startTime:String,endTime:String)
+GET		/getUserEventHistory/:userId/:eventTypeId/:startDate/:endDate	controllers.UserEventController.getUserEventHistory(userId:String,eventTypeId:String,startDate:String,endDate:String)
 POST	/recordEvent						controllers.UserEventController.recordEvent()
 
 

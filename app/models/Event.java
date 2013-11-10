@@ -4,6 +4,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Event {
+
+	private String userId;
+	private String eventTypeId;
+	private String eventTypeName; // a field not belonging to the table in database
+	private String dateString;
+	private String startTime;
+	private String endTime;
+	private String eventRecord;
+	
 	public Event(String userId, String eventTypeId, String dateString,
 			String startTime, String endTime, String eventRecord) {
 		super();
@@ -14,13 +23,18 @@ public class Event {
 		this.endTime = endTime;
 		this.eventRecord = eventRecord;
 	}
-	private String userId;
-	private String eventTypeId;
-	private String dateString;
-	private String startTime;
-	private String endTime;
-	private String eventRecord;
 	
+	public Event(String userId, String eventTypeId, String dateString,
+			String startTime, String endTime, String eventRecord, String eventTypeName) {
+		super();
+		this.userId = userId;
+		this.eventTypeId = eventTypeId;
+		this.dateString = dateString;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.eventRecord = eventRecord;
+		this.eventTypeName = eventTypeName;
+	}	
 	public String getEventTypeId() {
 		return eventTypeId;
 	}
@@ -61,16 +75,22 @@ public class Event {
 		String jsonString = new String();
 		try {
 			JSONObject obj=new JSONObject();
-			obj.put("userId", userId);
-			obj.put("eventTypeId", eventTypeId);
 			obj.put("date",  dateString);
 			obj.put("startTime", startTime);
 			obj.put("endTime", endTime);
-			obj.put("eventRecord", eventRecord);
+			if(eventTypeName!=null && eventRecord!=null){
+				obj.put("eventTypeName", eventRecord);
+			}
 			jsonString = obj.toString();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return jsonString;
+	}
+	public String getEventTypeName() {
+		return eventTypeName;
+	}
+	public void setEventTypeName(String eventTypeName) {
+		this.eventTypeName = eventTypeName;
 	}
 }
