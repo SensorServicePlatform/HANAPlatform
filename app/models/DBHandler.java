@@ -713,7 +713,7 @@ public class DBHandler {
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("INSERT INTO CMU.EVENT(userId, eventTypeId, dateString,"
+					.prepareStatement("INSERT INTO CMU.EVENT(userId, eventTypeId, date,"
 							+ " startTime, endTime, eventRecord) VALUES(?,?, ?, ?, ?, ?)");
 			preparedStatement.setString(1, event.getUserId());
 			preparedStatement.setString(2, event.getEventTypeId());
