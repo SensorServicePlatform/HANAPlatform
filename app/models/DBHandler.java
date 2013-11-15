@@ -509,7 +509,7 @@ public class DBHandler {
 				return null;
 			PreparedStatement preparedStatement;
 			preparedStatement = connection
-					.prepareStatement("SELECT * FROM CMU.CMU_SENSOR WHERE deviceID=? AND timeStamp<=? AND sensorType=? ORDER BY timeStamp DESC LIMIT 1");
+					.prepareStatement("SELECT * FROM CMU.CMU_SENSOR WHERE deviceID=? AND timeStamp=? AND sensorType=? ORDER BY timeStamp DESC LIMIT 1");
 			preparedStatement.setString(1, deviceId);
 			preparedStatement.setLong(2, timeStamp);
 			preparedStatement.setString(3, sensorType);
