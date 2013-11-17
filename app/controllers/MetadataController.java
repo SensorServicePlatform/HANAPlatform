@@ -33,7 +33,7 @@ public class MetadataController extends Controller {
 		}
 
 		// Parse JSON FIle 
-		String deviceTypeName= json.findPath("device_type_name").getTextValue();
+		String deviceTypeName= json.findPath("device_type").getTextValue();
 		String manufacturer = json.findPath("manufacturer").getTextValue();
 		String version = json.findPath("version").getTextValue();
 		String userDefinedFields = json.findPath("user_defined_fields").getTextValue();
