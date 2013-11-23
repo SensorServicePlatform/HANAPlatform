@@ -17,8 +17,8 @@ public class SensorReadingDaoImplementation implements SensorReadingDao{
 	@Override
 	public SensorReading searchReading(String deviceId, Long timeStamp, String sensorType) {
 		final String SQL = "SELECT * FROM CMU.CMU_SENSOR WHERE deviceID=? AND timeStamp<=? AND sensorType=? ORDER BY timeStamp DESC LIMIT 1";
-		SensorReading sensorReading = simpleJdbcTemplate.queryForObject(SQL, ParameterizedBeanPropertyRowMapper.newInstance(SensorReading.class), deviceId, timeStamp, sensorType);
-		return sensorReading;
+		List<SensorReading> sensorReadings = simpleJdbcTemplate.query(SQL, ParameterizedBeanPropertyRowMapper.newInstance(SensorReading.class), deviceId, timeStamp, sensorType);
+		return sensorReadings.isEmpty() ? null: sensorReadings.get(0);
 	}
 
 	@Override
