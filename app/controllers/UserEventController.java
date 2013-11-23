@@ -46,7 +46,9 @@ public class UserEventController extends Controller {
 		List<Event> events = dbHandler.getUserEventHistory(userId, eventTypeId,
 				startDate, endDate);
 		if (events == null || events.isEmpty()) {
-			return notFound("no devices found");
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message","no reading found");
+			return notFound(notFoundMsg);
 		}
 		String ret = new String();
 

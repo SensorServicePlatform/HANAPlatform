@@ -7,6 +7,7 @@ import models.DBHandler;
 import models.dao.DeviceDao;
 
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -64,7 +65,9 @@ public class DeviceController extends Controller {
 		checkDao();
 		List<models.Device> devices = deviceDao.getAllDevices();
 		if(devices == null || devices.isEmpty()){
-			return notFound("no devices found");
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message","no devices found");
+			return notFound(notFoundMsg);
 		}
 		String ret = new String();
 		if (format.equals("json"))
@@ -98,7 +101,11 @@ public class DeviceController extends Controller {
 		deviceType = deviceType.toLowerCase();
 		ArrayList<String> sensorTypes = dbHandler.getSensorType(deviceType);
 		if(sensorTypes == null || sensorTypes.isEmpty()){
-			return notFound("No sensor type found for " + deviceType);
+
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("deviceType",deviceType);
+			notFoundMsg.put("message","No sensor type found");
+			return notFound(notFoundMsg);
 		}
 		String ret = new String();
 		if (format.equals("json"))

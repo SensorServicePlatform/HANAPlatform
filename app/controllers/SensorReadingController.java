@@ -119,7 +119,9 @@ public class SensorReadingController extends Controller {
 		SensorReading reading = sensorReadingDao.searchReading(deviceId, timeStamp, sensorType);
 		
 		if(reading == null){
-			return notFound("no reading found");
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message","no reading found");
+			return notFound(notFoundMsg);
 		}
 		
 		String ret = null;
@@ -172,7 +174,7 @@ public class SensorReadingController extends Controller {
 		}
 		models.SensorReading reading = dbHandler.searchReading(deviceId, timeStamp, sensorType);
 		if(reading == null){
-			return notFound("no reading found");
+			
 		}
 		String readableTime = Utils.convertTimestampToReadable(reading.getTimeStamp());
 //		String ret = format.equals("json") ? 
@@ -194,7 +196,9 @@ public class SensorReadingController extends Controller {
 		checkDao();
 		List<SensorReading> readings = sensorReadingDao.searchReading(deviceId, startTime, endTime, sensorType);
 		if(readings == null || readings.isEmpty()){
-			return notFound("no reading found");
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message","no reading found");
+			return notFound(notFoundMsg);
 		}
 		StringBuilder strBuilder = new StringBuilder();
 		if (format.equals("json"))
@@ -250,7 +254,9 @@ public class SensorReadingController extends Controller {
 		}
 		ArrayList<models.SensorReading> readings = dbHandler.searchReading(deviceId, startTimestamp, endTimestamp, sensorType);
 		if(readings == null || readings.isEmpty()){
-			return notFound("no reading found");
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message","no reading found");
+			return notFound(notFoundMsg);
 		}
 		StringBuilder strBuilder = new StringBuilder();
 		if (format.equals("json"))
@@ -286,7 +292,9 @@ public class SensorReadingController extends Controller {
 		response().setHeader("Access-Control-Allow-Origin", "*");
 		ArrayList<models.SensorReading> readings = dbHandler.lastReadingFromAllDevices(timeStamp, sensorType);
 		if(readings == null || readings.isEmpty()){
-			return notFound("no reading found");
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message","no reading found");
+			return notFound(notFoundMsg);
 		}
 		String ret = new String();
 		if (format.equals("json"))
@@ -333,7 +341,9 @@ public class SensorReadingController extends Controller {
 		ArrayList<models.SensorReading> readings = dbHandler.lastestReadingFromAllDevices(sensorType);
 
 		if(readings == null || readings.isEmpty()){
-			return notFound("no reading found");
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message","no reading found");
+			return notFound(notFoundMsg);
 		}
 		StringBuilder sb = new StringBuilder();
 		if (format.equals("json"))

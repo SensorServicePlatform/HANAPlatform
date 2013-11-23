@@ -79,7 +79,7 @@ public class Event {
 			obj.put("startTime", startTime);
 			obj.put("endTime", endTime);
 			if(eventTypeName!=null && eventRecord!=null){
-				obj.put("eventTypeName", eventRecord);
+				obj.put(eventTypeName, eventRecord);
 			}
 			jsonString = obj.toString();
 		} catch (JSONException e) {

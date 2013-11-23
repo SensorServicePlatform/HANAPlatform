@@ -271,7 +271,9 @@ public class MetadataController extends Controller {
 		response().setHeader("Access-Control-Allow-Origin", "*");
 		models.SensorReading reading = dbHandler.searchReading(deviceId, timeStamp, sensorType);
 		if(reading == null){
-			return notFound("no reading found");
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message","no reading found");
+			return notFound(notFoundMsg);
 		}
 		String ret = format.equals("json") ? reading.toJSONString() : reading.toCSVString(); 
 		return ok(ret);
