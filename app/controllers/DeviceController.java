@@ -13,6 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.libs.Json;
 
 public class DeviceController extends Controller {
 	private static DBHandler dbHandler = null;
