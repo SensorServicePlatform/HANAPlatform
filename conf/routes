@@ -52,6 +52,9 @@ GET	/delete_device/:network_address 			controllers.MetadataController.deleteDevi
 GET     /get_sensors          controllers.MetadataController.get_sensors(format: String = "csv")
 GET     /get_sensors/csv       controllers.MetadataController.get_sensors(format: String = "csv")
 GET     /get_sensors/json          controllers.MetadataController.get_sensors(format: String = "json")
+GET     /get_sensors_by_device_id/:device_id/json          controllers.MetadataController.getSensorByDeviceId(device_id: String,format: String = "json")
+GET     /get_sensors_by_device_id/:device_id/csv         controllers.MetadataController.getSensorByDeviceId(device_id: String, format: String = "csv")
+GET     /get_sensors_by_device_id/:device_id        controllers.MetadataController.getSensorByDeviceId(device_id: String, format: String = "csv")
 
 
 # WorkFlow
