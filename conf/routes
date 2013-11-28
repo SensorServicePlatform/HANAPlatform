@@ -48,6 +48,12 @@ GET	/delete_sensor/:print_name				  controllers.MetadataController.deleteSensor(
 GET	/delete_device_type/:device_type_name 			controllers.MetadataController.deleteDeviceType(device_type_name: String)
 GET	/delete_device/:network_address 			controllers.MetadataController.deleteDevice(network_address: String)
 
+# Get sensors and sensor_types  
+GET     /get_sensors          controllers.MetadataController.get_sensors(format: String = "csv")
+GET     /get_sensors/csv       controllers.MetadataController.get_sensors(format: String = "csv")
+GET     /get_sensors/json          controllers.MetadataController.get_sensors(format: String = "json")
+
+
 # WorkFlow
 POST	/workflow/							controllers.WorkFlowRunnerController.changeInterval()
 GET		/workflow/							controllers.WorkFlowRunnerController.index(format:String = "html")
