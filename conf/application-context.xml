@@ -25,9 +25,15 @@
       <property name="simpleJdbcTemplate"  ref="simpleJdbcTemplate" />    
    </bean>
    
-   <!-- Definition for deviceDaoImplementation bean -->
+   <!-- Definition for sensorDaoImplementation bean -->
    <bean id="sensorDaoImplementation" 
       class="models.dao.SensorDaoImplementation">
+      <property name="simpleJdbcTemplate"  ref="simpleJdbcTemplate" />    
+   </bean>
+   
+   <!-- Definition for sensorTypeDaoImplementation bean -->
+   <bean id="sensorTypeDaoImplementation" 
+      class="models.dao.SensorTypeDaoImplementation">
       <property name="simpleJdbcTemplate"  ref="simpleJdbcTemplate" />    
    </bean>
    

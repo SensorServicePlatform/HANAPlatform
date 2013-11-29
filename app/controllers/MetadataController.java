@@ -6,7 +6,9 @@ import models.DBHandler;
 import models.Event;
 import models.Sensor;
 import models.MessageBusHandler;
+import models.SensorType;
 import models.dao.SensorDao;
+import models.dao.SensorTypeDao;
 //import models.cmu.sv.sensor.SensorReading;
 import helper.Utils;
 
@@ -27,6 +29,7 @@ public class MetadataController extends Controller {
 	private static DBHandler dbHandler = null;
 	private static ApplicationContext context;
 	private static SensorDao sensorDao;
+	private static SensorTypeDao sensorTypeDao;
 
 	private static void checkDao() {
 		if (context == null) {
@@ -35,6 +38,9 @@ public class MetadataController extends Controller {
 		}
 		if (sensorDao == null) {
 			sensorDao = (SensorDao) context.getBean("sensorDaoImplementation");
+		}
+		if (sensorTypeDao == null) {
+			sensorTypeDao = (SensorTypeDao) context.getBean("sensorTypeDaoImplementation");
 		}
 	}
 
@@ -347,42 +353,81 @@ public class MetadataController extends Controller {
 
 		return ok(ret);
 	}
-	// Get all the sensors
-		public static Result getSensorByDeviceId(String deviceId, String format) {
-			if (!testDBHandler()) {
-				return internalServerError("database conf file not found");
-			}
-			response().setHeader("Access-Control-Allow-Origin", "*");
-			checkDao();
-			List<Sensor> sensors = sensorDao.getSensorByDeviceId(deviceId);
-			if (sensors == null || sensors.isEmpty()) {
-				ObjectNode notFoundMsg = Json.newObject();
-				notFoundMsg.put("message", "no reading found");
-				return notFound(notFoundMsg);
-			}
-			String ret = "";
-			if (format.equals("json")) {
 
-				for (Sensor sensor : sensors) {
-					if (ret.isEmpty())
-						ret += "[";
-					else
-						ret += ',';
-					ret += sensor.toJSONString();
-				}
-				ret += "]";
-			} else if (format.equals("csv")) {
-				for (Sensor sensor : sensors) {
-					if (ret.isEmpty())
-						ret += sensor.getCSVHeader();
-					else
-						ret += '\n';
-					ret += sensor.toCSVString();
-				}
-				ret += "]";
-			}
-
-			return ok(ret);
+	// Get all the sensor types
+	public static Result get_sensor_types(String format) {
+		if (!testDBHandler()) {
+			return internalServerError("database conf file not found");
 		}
+		response().setHeader("Access-Control-Allow-Origin", "*");
+		checkDao();
+		List<SensorType> sensorTypes = sensorTypeDao.getAllSensorTypes();
+		if (sensorTypes == null || sensorTypes.isEmpty()) {
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message", "no reading found");
+			return notFound(notFoundMsg);
+		}
+		String ret = "";
+		if (format.equals("json")) {
+
+			for (SensorType sensorType : sensorTypes) {
+				if (ret.isEmpty())
+					ret += "[";
+				else
+					ret += ',';
+				ret += sensorType.toJSONString();
+			}
+			ret += "]";
+		} else if (format.equals("csv")) {
+			for (SensorType sensorType : sensorTypes) {
+				if (ret.isEmpty())
+					ret += sensorType.getCSVHeader();
+				else
+					ret += '\n';
+				ret += sensorType.toCSVString();
+			}
+			ret += "]";
+		}
+
+		return ok(ret);
+	}
+	
+	// Get all the sensors
+	public static Result getSensorByDeviceId(String deviceId, String format) {
+		if (!testDBHandler()) {
+			return internalServerError("database conf file not found");
+		}
+		response().setHeader("Access-Control-Allow-Origin", "*");
+		checkDao();
+		List<Sensor> sensors = sensorDao.getSensorByDeviceId(deviceId);
+		if (sensors == null || sensors.isEmpty()) {
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message", "no reading found");
+			return notFound(notFoundMsg);
+		}
+		String ret = "";
+		if (format.equals("json")) {
+
+			for (Sensor sensor : sensors) {
+				if (ret.isEmpty())
+					ret += "[";
+				else
+					ret += ',';
+				ret += sensor.toJSONString();
+			}
+			ret += "]";
+		} else if (format.equals("csv")) {
+			for (Sensor sensor : sensors) {
+				if (ret.isEmpty())
+					ret += sensor.getCSVHeader();
+				else
+					ret += '\n';
+				ret += sensor.toCSVString();
+			}
+			ret += "]";
+		}
+
+		return ok(ret);
+	}
 
 }

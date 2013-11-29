@@ -55,6 +55,9 @@ GET     /get_sensors/json          controllers.MetadataController.get_sensors(fo
 GET     /get_sensors_by_device_id/:device_id/json          controllers.MetadataController.getSensorByDeviceId(device_id: String,format: String = "json")
 GET     /get_sensors_by_device_id/:device_id/csv         controllers.MetadataController.getSensorByDeviceId(device_id: String, format: String = "csv")
 GET     /get_sensors_by_device_id/:device_id        controllers.MetadataController.getSensorByDeviceId(device_id: String, format: String = "csv")
+GET     /get_sensor_types          controllers.MetadataController.get_sensor_types(format: String = "csv")
+GET     /get_sensor_types/csv       controllers.MetadataController.get_sensor_types(format: String = "csv")
+GET     /get_sensor_types/json          controllers.MetadataController.get_sensor_types(format: String = "json")
 
 
 # WorkFlow
