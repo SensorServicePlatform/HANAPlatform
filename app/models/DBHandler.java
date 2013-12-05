@@ -288,15 +288,15 @@ public class DBHandler {
 		}
 	}
 
-	public boolean deleteSensorType(String sensorType) {
+	public boolean deleteSensorType(String GUID) {
 		Connection connection = getConnection();
 		if (connection == null)
 			return false;
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("DELETE FROM CMU.NEW_SENSOR_TYPES WHERE SENSOR_CATEGORY = ?");
-			preparedStatement.setString(1, sensorType);
+					.prepareStatement("DELETE FROM CMU.NEW_SENSOR_TYPES WHERE GUID = ?");
+			preparedStatement.setString(1, GUID);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");
