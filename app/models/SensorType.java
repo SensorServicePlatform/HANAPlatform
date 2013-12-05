@@ -95,7 +95,7 @@ public class SensorType {
 	}
 
 	public String toCSVString() {
-		return sensorTypeId + "," + sensorTypeName + "," + manufacturer + ","
+		return sensorTypeId + "," + sensorTypeName + "," + manufacturer + "," +version+","
 				+ max_value + "," + min_value + "," + unit + "," + interpreter + ","
 				+ deviceType;
 	}
@@ -107,6 +107,7 @@ public class SensorType {
 			obj.put("sensor_type_id", sensorTypeId);
 			obj.put("sensor_type_name", sensorTypeName);
 			obj.put("manufacturer", manufacturer);
+			obj.put("version",version);
 			obj.put("max_value", max_value);
 			obj.put("min_value", min_value);
 			obj.put("unit", unit);
