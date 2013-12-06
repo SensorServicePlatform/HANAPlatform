@@ -216,16 +216,16 @@ public class MetadataController extends Controller {
 		}
 	}
 
-	public static Result deleteSensorType(String sensorType) {
+	public static Result deleteSensorType(String guid) {
 		if (!testDBHandler()) {
 			return internalServerError("database conf file not found");
 		}
 
-		boolean result = dbHandler.deleteSensorType(sensorType);
+		boolean result = dbHandler.deleteSensorType(guid);
 
 		ArrayList<String> error = new ArrayList<String>();
 		if (!result) {
-			error.add(sensorType);
+			error.add(guid);
 		}
 
 		if (error.size() == 0) {
@@ -243,16 +243,16 @@ public class MetadataController extends Controller {
 		}
 	}
 
-	public static Result deleteSensor(String printName) {
+	public static Result deleteSensor(String guid) {
 		if (!testDBHandler()) {
 			return internalServerError("database conf file not found");
 		}
 
-		boolean result = dbHandler.deleteSensor(printName);
+		boolean result = dbHandler.deleteSensor(guid);
 
 		ArrayList<String> error = new ArrayList<String>();
 		if (!result) {
-			error.add(printName);
+			error.add(guid);
 		}
 
 		if (error.size() == 0) {
@@ -268,16 +268,16 @@ public class MetadataController extends Controller {
 		}
 	}
 
-	public static Result deleteDeviceType(String deviceTypeName) {
+	public static Result deleteDeviceType(String deviceTypeKey) {
 		if (!testDBHandler()) {
 			return internalServerError("database conf file not found");
 		}
 
-		boolean result = dbHandler.deleteDeviceType(deviceTypeName);
+		boolean result = dbHandler.deleteDeviceType(deviceTypeKey);
 
 		ArrayList<String> error = new ArrayList<String>();
 		if (!result) {
-			error.add(deviceTypeName);
+			error.add(deviceTypeKey);
 		}
 
 		if (error.size() == 0) {
@@ -293,16 +293,16 @@ public class MetadataController extends Controller {
 		}
 	}
 
-	public static Result deleteDevice(String networkAddress) {
+	public static Result deleteDevice(String guid) {
 		if (!testDBHandler()) {
 			return internalServerError("database conf file not found");
 		}
 
-		boolean result = dbHandler.deleteDevice(networkAddress);
+		boolean result = dbHandler.deleteDevice(guid);
 
 		ArrayList<String> error = new ArrayList<String>();
 		if (!result) {
-			error.add(networkAddress);
+			error.add(guid);
 		}
 
 		if (error.size() == 0) {

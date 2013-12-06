@@ -319,15 +319,15 @@ public class DBHandler {
 		}
 	}
 
-	public boolean deleteSensor(String printName) {
+	public boolean deleteSensor(String GUID) {
 		Connection connection = getConnection();
 		if (connection == null)
 			return false;
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("DELETE FROM CMU.NEW_SENSORS WHERE PRINT_NAME = ?");
-			preparedStatement.setString(1, printName);
+					.prepareStatement("DELETE FROM CMU.NEW_SENSORS WHERE GUID = ?");
+			preparedStatement.setString(1, GUID);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");
@@ -346,15 +346,15 @@ public class DBHandler {
 		}
 	}
 
-	public boolean deleteDeviceType(String deviceTypeName) {
+	public boolean deleteDeviceType(String deviceTypeKey) {
 		Connection connection = getConnection();
 		if (connection == null)
 			return false;
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("DELETE FROM CMU.NEW_DEVICE_TYPES WHERE DEVICE_TYPE_NAME = ?");
-			preparedStatement.setString(1, deviceTypeName);
+					.prepareStatement("DELETE FROM CMU.NEW_DEVICE_TYPES WHERE DEVICE_TYPE_KEY = ?");
+			preparedStatement.setString(1, deviceTypeKey);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");
@@ -373,15 +373,15 @@ public class DBHandler {
 		}
 	}
 
-	public boolean deleteDevice(String networkAddress) {
+	public boolean deleteDevice(String GUID) {
 		Connection connection = getConnection();
 		if (connection == null)
 			return false;
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("DELETE FROM CMU.NEW_DEVICES WHERE network_address = ?");
-			preparedStatement.setString(1, networkAddress);
+					.prepareStatement("DELETE FROM CMU.NEW_DEVICES WHERE GUID = ?");
+			preparedStatement.setString(1, GUID);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");

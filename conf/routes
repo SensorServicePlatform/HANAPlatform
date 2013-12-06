@@ -44,9 +44,9 @@ POST	/add_device_type 			controllers.MetadataController.addDeviceType()
 POST	/add_device 			controllers.MetadataController.addDevice()
 
 GET	/delete_sensor_type/:guid				  controllers.MetadataController.deleteSensorType(guid: String)
-GET	/delete_sensor/:print_name				  controllers.MetadataController.deleteSensor(print_name: String)
-GET	/delete_device_type/:device_type_name 			controllers.MetadataController.deleteDeviceType(device_type_name: String)
-GET	/delete_device/:network_address 			controllers.MetadataController.deleteDevice(network_address: String)
+GET	/delete_sensor/:guid				  controllers.MetadataController.deleteSensor(guid: String)
+GET	/delete_device_type/:device_type_key 			controllers.MetadataController.deleteDeviceType(device_type_key: String)
+GET	/delete_device/:guid 			controllers.MetadataController.deleteDevice(guid: String)
 
 # Get sensors and sensor_types  
 GET     /get_sensors          controllers.MetadataController.get_sensors(format: String = "csv")
