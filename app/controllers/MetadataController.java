@@ -3,10 +3,12 @@ package controllers;
 import java.util.*;
 
 import models.DBHandler;
+import models.DeviceType;
 import models.Event;
 import models.Sensor;
 import models.MessageBusHandler;
 import models.SensorType;
+import models.dao.DeviceTypeDao;
 import models.dao.SensorDao;
 import models.dao.SensorTypeDao;
 //import models.cmu.sv.sensor.SensorReading;
@@ -30,6 +32,7 @@ public class MetadataController extends Controller {
 	private static ApplicationContext context;
 	private static SensorDao sensorDao;
 	private static SensorTypeDao sensorTypeDao;
+	private static DeviceTypeDao deviceTypeDao;
 
 	private static void checkDao() {
 		if (context == null) {
@@ -41,6 +44,9 @@ public class MetadataController extends Controller {
 		}
 		if (sensorTypeDao == null) {
 			sensorTypeDao = (SensorTypeDao) context.getBean("sensorTypeDaoImplementation");
+		}
+		if (deviceTypeDao == null) {
+			deviceTypeDao = (DeviceTypeDao) context.getBean("deviceTypeDaoImplementation");
 		}
 	}
 
@@ -477,4 +483,40 @@ public class MetadataController extends Controller {
 		return ok(ret);
 	}
 
+	// Get all the device types
+		public static Result get_device_types(String format) {
+			if (!testDBHandler()) {
+				return internalServerError("database conf file not found");
+			}
+			response().setHeader("Access-Control-Allow-Origin", "*");
+			checkDao();
+			List<DeviceType> deviceTypes = deviceTypeDao.getAllDeviceTypes();
+			if (deviceTypes == null || deviceTypes.isEmpty()) {
+				ObjectNode notFoundMsg = Json.newObject();
+				notFoundMsg.put("message", "no reading found");
+				return notFound(notFoundMsg);
+			}
+			String ret = "";
+			if (format.equals("json")) {
+
+				for (DeviceType deviceType : deviceTypes) {
+					if (ret.isEmpty())
+						ret += "[";
+					else
+						ret += ',';
+					ret += deviceType.toJSONString();
+				}
+				ret += "]";
+			} else if (format.equals("csv")) {
+				for (DeviceType deviceType : deviceTypes) {
+					if (ret.isEmpty())
+						ret += deviceType.getCSVHeader();
+					else
+						ret += '\n';
+					ret += deviceType.toCSVString();
+				}
+			}
+
+			return ok(ret);
+		}
 }

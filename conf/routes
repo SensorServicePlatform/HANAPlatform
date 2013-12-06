@@ -59,6 +59,10 @@ GET     /get_all_sensor_types          controllers.MetadataController.get_sensor
 GET     /get_all_sensor_types/csv       controllers.MetadataController.get_sensor_types(format: String = "csv")
 GET     /get_all_sensor_types/json          controllers.MetadataController.get_sensor_types(format: String = "json")
 
+# Get device type
+GET			/get_device_types		 		controllers.MetadataController.get_device_types(format: String = "csv")
+GET			/get_device_types/csv		 controllers.MetadataController.get_device_types(format: String = "csv")
+GET			/get_device_types/json		 controllers.MetadataController.get_device_types(format: String = "json")
 
 # WorkFlow
 POST	/workflow/							controllers.WorkFlowRunnerController.changeInterval()
