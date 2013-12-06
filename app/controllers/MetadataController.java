@@ -422,13 +422,12 @@ public class MetadataController extends Controller {
 					ret += '\n';
 				ret += sensorType.toCSVString();
 			}
-			ret += "]";
 		}
 
 		return ok(ret);
 	}
 	
-	// Get all the sensors
+	// Get sensor by device id
 	public static Result getSensorByDeviceId(String deviceId, String format) {
 		if (!testDBHandler()) {
 			return internalServerError("database conf file not found");
@@ -460,7 +459,6 @@ public class MetadataController extends Controller {
 					ret += '\n';
 				ret += sensor.toCSVString();
 			}
-			ret += "]";
 		}
 
 		return ok(ret);
