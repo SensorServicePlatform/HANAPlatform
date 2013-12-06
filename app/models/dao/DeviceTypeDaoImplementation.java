@@ -21,8 +21,7 @@ public class DeviceTypeDaoImplementation implements DeviceTypeDao{
 	@Override
 	public List<DeviceType> getAllDeviceTypes() {
 		final String NEW_SQL = "SELECT \"DEVICE_TYPE_KEY\", \"DEVICE_TYPE_NAME\", \"MANUFACTURER\", \"VERSION\" FROM CMU.NEW_DEVICE_TYPES";
-		List<DeviceType> deviceTypes = simpleJdbcTemplate.query(NEW_SQL, ParameterizedBeanPropertyRowMapper.newInstance(DeviceType.class));
-		deviceTypes.addAll(simpleJdbcTemplate.query(NEW_SQL, new ParameterizedBeanPropertyRowMapper<DeviceType>(){
+		List<DeviceType> deviceTypes =simpleJdbcTemplate.query(NEW_SQL, new ParameterizedBeanPropertyRowMapper<DeviceType>(){
 
 			@Override
 			public DeviceType mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -34,7 +33,7 @@ public class DeviceTypeDaoImplementation implements DeviceTypeDao{
 				return device;
 			}
 
-		}));
+		});
 		return deviceTypes;
 	}
 }
