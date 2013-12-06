@@ -129,7 +129,7 @@ public class DBHandler {
 		return resultStr;
 	}
 
-	public boolean addDeviceType(String deviceTypeName, String manufacturer,
+	public boolean addDeviceType(String deviceTypeKey,String deviceTypeName, String manufacturer,
 			String version, String userDefinedFields) {
 		Connection connection = getConnection();
 		if (connection == null)
@@ -137,11 +137,12 @@ public class DBHandler {
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("INSERT INTO CMU.NEW_DEVICE_TYPES(DEVICE_TYPE_NAME, MANUFACTURER, VERSION, USER_DEFINED_FIELDS) VALUES(?,?,?,?)");
-			preparedStatement.setString(1, deviceTypeName);
-			preparedStatement.setString(2, manufacturer);
-			preparedStatement.setString(3, version);
-			preparedStatement.setString(4, userDefinedFields);
+					.prepareStatement("INSERT INTO CMU.NEW_DEVICE_TYPES(DEVICE_TYPE_KEY,DEVICE_TYPE_NAME, MANUFACTURER, VERSION, USER_DEFINED_FIELDS) VALUES(?,?,?,?,?)");
+			preparedStatement.setString(1, deviceTypeKey);
+			preparedStatement.setString(2, deviceTypeName);
+			preparedStatement.setString(3, manufacturer);
+			preparedStatement.setString(4, version);
+			preparedStatement.setString(5, userDefinedFields);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");
@@ -160,7 +161,7 @@ public class DBHandler {
 		}
 	}
 
-	public boolean addDeviceNew(String deviceType, String deviceAgent,
+	public boolean addDeviceNew(String GUID,String deviceType, String deviceAgent,
 			String networkAddress, String locationDescription, String latitude,
 			String longitude, String altitude, String positionFormatSystem,
 			String userDefinedFields) {
@@ -170,16 +171,17 @@ public class DBHandler {
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("INSERT INTO CMU.NEW_DEVICES(DEVICE_TYPE,DEVICE_AGENT, NETWORK_ADDRESS, LOCATION_DESCRIPTION, LATITUDE, LONGITUDE, ALTITUDE, POSITION_FORMAT_SYSTEM, USER_DEFINED_FIELDS) VALUES(?,?,?,?,?,?,?,?,?)");
-			preparedStatement.setString(1, deviceType);
-			preparedStatement.setString(2, deviceAgent);
-			preparedStatement.setString(3, networkAddress);
-			preparedStatement.setString(4, locationDescription);
-			preparedStatement.setString(5, latitude);
-			preparedStatement.setString(6, longitude);
-			preparedStatement.setString(7, altitude);
-			preparedStatement.setString(8, positionFormatSystem);
-			preparedStatement.setString(9, userDefinedFields);
+					.prepareStatement("INSERT INTO CMU.NEW_DEVICES(GUID,DEVICE_TYPE,DEVICE_AGENT, NETWORK_ADDRESS, LOCATION_DESCRIPTION, LATITUDE, LONGITUDE, ALTITUDE, POSITION_FORMAT_SYSTEM, USER_DEFINED_FIELDS) VALUES(?,?,?,?,?,?,?,?,?,?)");
+			preparedStatement.setString(1,GUID);
+			preparedStatement.setString(2, deviceType);
+			preparedStatement.setString(3, deviceAgent);
+			preparedStatement.setString(4, networkAddress);
+			preparedStatement.setString(5, locationDescription);
+			preparedStatement.setString(6, latitude);
+			preparedStatement.setString(7, longitude);
+			preparedStatement.setString(8, altitude);
+			preparedStatement.setString(9, positionFormatSystem);
+			preparedStatement.setString(10, userDefinedFields);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");
@@ -198,16 +200,17 @@ public class DBHandler {
 		}
 	}
 
-	public boolean addSensorType(String sensorType, String userDefinedFields) {
+	public boolean addSensorType(String GUID, String sensorType, String userDefinedFields) {
 		Connection connection = getConnection();
 		if (connection == null)
 			return false;
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("INSERT INTO CMU.NEW_SENSOR_TYPES(SENSOR_CATEGORY, USER_DEFINED_FIELDS) VALUES(?,?)");
-			preparedStatement.setString(1, sensorType);
-			preparedStatement.setString(2, userDefinedFields);
+					.prepareStatement("INSERT INTO CMU.NEW_SENSOR_TYPES(GUID, SENSOR_CATEGORY, USER_DEFINED_FIELDS) VALUES(?,?,?)");
+			preparedStatement.setString(1, GUID);
+			preparedStatement.setString(2, sensorType);
+			preparedStatement.setString(3, userDefinedFields);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");
@@ -226,7 +229,7 @@ public class DBHandler {
 		}
 	}
 
-	public boolean addSensor(String printName, String sensorType,
+	public boolean addSensor(String GUID, String printName, String sensorType,
 			String deviceId, String userDefinedFields) {
 		Connection connection = getConnection();
 		if (connection == null)
@@ -234,11 +237,12 @@ public class DBHandler {
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("INSERT INTO CMU.NEW_SENSORS(PRINT_NAME, SENSOR_TYPE, DEVICE, USER_DEFINED_FIELDS) VALUES(?,?,?,?)");
-			preparedStatement.setString(1, printName);
-			preparedStatement.setString(2, sensorType);
-			preparedStatement.setString(3, deviceId);
-			preparedStatement.setString(4, userDefinedFields);
+					.prepareStatement("INSERT INTO CMU.NEW_SENSORS(GUID, PRINT_NAME, SENSOR_TYPE, DEVICE, USER_DEFINED_FIELDS) VALUES(?,?,?,?,?)");
+			preparedStatement.setString(1, GUID);
+			preparedStatement.setString(2, printName);
+			preparedStatement.setString(3, sensorType);
+			preparedStatement.setString(4, deviceId);
+			preparedStatement.setString(5, userDefinedFields);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed."); return true;

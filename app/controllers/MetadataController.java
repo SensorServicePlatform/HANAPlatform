@@ -61,6 +61,8 @@ public class MetadataController extends Controller {
 		}
 
 		// Parse JSON FIle
+		String id = json.findPath("id").getTextValue(); //add id
+		
 		String deviceTypeName = json.findPath("device_type").getTextValue();
 		String manufacturer = json.findPath("manufacturer").getTextValue();
 		String version = json.findPath("version").getTextValue();
@@ -68,7 +70,7 @@ public class MetadataController extends Controller {
 				.getTextValue();
 		ArrayList<String> error = new ArrayList<String>();
 
-		boolean result = dbHandler.addDeviceType(deviceTypeName, manufacturer,
+		boolean result = dbHandler.addDeviceType(id,deviceTypeName, manufacturer,
 				version, userDefinedFields);
 
 		if (!result) {
@@ -95,6 +97,8 @@ public class MetadataController extends Controller {
 		}
 
 		// Parse JSON FIle
+		String id = json.findPath("id").getTextValue(); //add id
+		
 		String deviceType = json.findPath("device_type").getTextValue();
 		String deviceAgent = json.findPath("device_agent").getTextValue();
 		String networkAddress = json.findPath("network_address").getTextValue();
@@ -109,7 +113,7 @@ public class MetadataController extends Controller {
 				.getTextValue();
 		ArrayList<String> error = new ArrayList<String>();
 
-		boolean result = dbHandler.addDeviceNew(deviceType, deviceAgent,
+		boolean result = dbHandler.addDeviceNew(id,deviceType, deviceAgent,
 				networkAddress, locationDescription, latitude, longitude,
 				altitude, positionFormatSystem, userDefinedFields);
 
@@ -142,12 +146,14 @@ public class MetadataController extends Controller {
 		}
 
 		// Parse JSON FIle
+		String id = json.findPath("id").getTextValue(); //add id
+		
 		String sensorType = json.findPath("sensor_type").getTextValue();
 		String userDefinedFields = json.findPath("user_defined_fields")
 				.getTextValue();
 		ArrayList<String> error = new ArrayList<String>();
 
-		boolean result = dbHandler.addSensorType(sensorType, userDefinedFields);
+		boolean result = dbHandler.addSensorType(id,sensorType, userDefinedFields);
 
 		if (!result) {
 			error.add(sensorType);
@@ -179,6 +185,8 @@ public class MetadataController extends Controller {
 		}
 
 		// Parse JSON FIle
+		String id = json.findPath("id").getTextValue(); //add id
+		
 		String printName = json.findPath("print_name").getTextValue();
 		String sensorType = json.findPath("sensor_type").getTextValue();
 		String deviceId = json.findPath("device_id").getTextValue();
@@ -186,7 +194,7 @@ public class MetadataController extends Controller {
 				.getTextValue();
 		ArrayList<String> error = new ArrayList<String>();
 
-		boolean result = dbHandler.addSensor(printName, sensorType, deviceId,
+		boolean result = dbHandler.addSensor(id,printName, sensorType, deviceId,
 				userDefinedFields);
 
 		if (!result) {
