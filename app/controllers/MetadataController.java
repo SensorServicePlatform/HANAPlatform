@@ -79,11 +79,16 @@ public class MetadataController extends Controller {
 
 		if (error.size() == 0) {
 			System.out.println("device type saved");
-			return ok("device type saved");
+			ObjectNode msg = Json.newObject();
+			msg.put("message","device type saved");
+			return ok(msg);
 		} else {
 			System.out.println("some device types not saved: "
 					+ error.toString());
-			return ok("some device types not saved: " + error.toString());
+
+			ObjectNode msg = Json.newObject();
+			msg.put("error","device types not saved: "+error.toString());
+			return ok(msg);
 		}
 	}
 
@@ -131,7 +136,7 @@ public class MetadataController extends Controller {
 			System.out.println("some devices not saved: " + error.toString());
 
 			ObjectNode msg = Json.newObject();
-			msg.put("message","device not saved: "+error.toString());
+			msg.put("error","device not saved: "+error.toString());
 			return ok(msg);
 		}
 	}
@@ -170,7 +175,7 @@ public class MetadataController extends Controller {
 					+ error.toString());
 
 			ObjectNode msg = Json.newObject();
-			msg.put("message","sensor type not saved "+error.toString());
+			msg.put("error","sensor type not saved "+error.toString());
 			return ok(msg);
 		}
 	}
@@ -211,7 +216,7 @@ public class MetadataController extends Controller {
 			System.out.println("some sensors not saved: " + error.toString());
 
 			ObjectNode msg = Json.newObject();
-			msg.put("message","sensor not saved "+error.toString());
+			msg.put("error","sensor not saved "+error.toString());
 			return ok(msg);
 		}
 	}
@@ -238,7 +243,7 @@ public class MetadataController extends Controller {
 			System.out.println("sensor type not deleted: " + error.toString());
 			
 			ObjectNode msg = Json.newObject();
-			msg.put("message","sensor type not deleted "+error.toString());
+			msg.put("error","sensor type not deleted "+error.toString());
 			return ok(msg);
 		}
 	}
@@ -263,7 +268,7 @@ public class MetadataController extends Controller {
 		} else {
 			System.out.println("sensor not deleted: " + error.toString());
 			ObjectNode msg = Json.newObject();
-			msg.put("message","sensor not deleted "+error.toString());
+			msg.put("error","sensor not deleted "+error.toString());
 			return ok(msg);
 		}
 	}
@@ -288,7 +293,7 @@ public class MetadataController extends Controller {
 		} else {
 			System.out.println("device type not deleted: " + error.toString());
 			ObjectNode msg = Json.newObject();
-			msg.put("message","device type not deleted "+error.toString());
+			msg.put("error","device type not deleted "+error.toString());
 			return ok(msg);
 		}
 	}
@@ -313,7 +318,7 @@ public class MetadataController extends Controller {
 		} else {
 			System.out.println("device not deleted: " + error.toString());
 			ObjectNode msg = Json.newObject();
-			msg.put("message","device not deleted "+error.toString());
+			msg.put("error","device not deleted "+error.toString());
 			return ok(msg);
 		}
 	}
