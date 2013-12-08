@@ -9,8 +9,8 @@ public class SensorType {
 	private String sensorTypeName;
 	private String manufacturer;
 	private double version;
-	private int max_value;
-	private int min_value;
+	private double max_value;
+	private double min_value;
 	private String unit;
 	private String interpreter;
 	private String deviceType;
@@ -49,19 +49,19 @@ public class SensorType {
 		this.version = version;
 	}
 
-	public int getMax_value() {
+	public double getMax_value() {
 		return max_value;
 	}
 
-	public void setMax_value(int max_value) {
+	public void setMax_value(double max_value) {
 		this.max_value = max_value;
 	}
 
-	public int getMin_value() {
+	public double getMin_value() {
 		return min_value;
 	}
 
-	public void setMin_value(int min_value) {
+	public void setMin_value(double min_value) {
 		this.min_value = min_value;
 	}
 

@@ -28,8 +28,8 @@ public class SensorTypeDaoImplementation implements SensorTypeDao{
 				sensorType.setSensorTypeName(rs.getString("SENSOR_CATEGORY"));
 				sensorType.setManufacturer(rs.getString("MANUFACTURER"));
 				sensorType.setVersion(rs.getDouble("VERSION"));
-				sensorType.setMax_value(rs.getInt("MAX_VALUE"));
-				sensorType.setMin_value(rs.getInt("MIN_VALUE"));
+				sensorType.setMax_value(rs.getDouble("MAX_VALUE"));
+				sensorType.setMin_value(rs.getDouble("MIN_VALUE"));
 				sensorType.setUnit(rs.getString("Unit"));
 				sensorType.setInterpreter(rs.getString("INTERPRETER"));
 				sensorType.setDeviceType(rs.getString("DEVICE_TYPE"));
