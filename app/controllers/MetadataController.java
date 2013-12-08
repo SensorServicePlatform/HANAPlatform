@@ -43,10 +43,12 @@ public class MetadataController extends Controller {
 			sensorDao = (SensorDao) context.getBean("sensorDaoImplementation");
 		}
 		if (sensorTypeDao == null) {
-			sensorTypeDao = (SensorTypeDao) context.getBean("sensorTypeDaoImplementation");
+			sensorTypeDao = (SensorTypeDao) context
+					.getBean("sensorTypeDaoImplementation");
 		}
 		if (deviceTypeDao == null) {
-			deviceTypeDao = (DeviceTypeDao) context.getBean("deviceTypeDaoImplementation");
+			deviceTypeDao = (DeviceTypeDao) context
+					.getBean("deviceTypeDaoImplementation");
 		}
 	}
 
@@ -67,8 +69,8 @@ public class MetadataController extends Controller {
 		}
 
 		// Parse JSON FIle
-		String id = json.findPath("id").getTextValue(); //add id
-		
+		String id = json.findPath("id").getTextValue(); // add id
+
 		String deviceTypeName = json.findPath("device_type").getTextValue();
 		String manufacturer = json.findPath("manufacturer").getTextValue();
 		String version = json.findPath("version").getTextValue();
@@ -76,8 +78,8 @@ public class MetadataController extends Controller {
 				.getTextValue();
 		ArrayList<String> error = new ArrayList<String>();
 
-		boolean result = dbHandler.addDeviceType(id,deviceTypeName, manufacturer,
-				version, userDefinedFields);
+		boolean result = dbHandler.addDeviceType(id, deviceTypeName,
+				manufacturer, version, userDefinedFields);
 
 		if (!result) {
 			error.add(deviceTypeName);
@@ -86,14 +88,14 @@ public class MetadataController extends Controller {
 		if (error.size() == 0) {
 			System.out.println("device type saved");
 			ObjectNode msg = Json.newObject();
-			msg.put("message","device type saved");
+			msg.put("message", "device type saved");
 			return ok(msg);
 		} else {
 			System.out.println("some device types not saved: "
 					+ error.toString());
 
 			ObjectNode msg = Json.newObject();
-			msg.put("error","device types not saved: "+error.toString());
+			msg.put("error", "device types not saved: " + error.toString());
 			return ok(msg);
 		}
 	}
@@ -108,8 +110,8 @@ public class MetadataController extends Controller {
 		}
 
 		// Parse JSON FIle
-		String id = json.findPath("id").getTextValue(); //add id
-		
+		String id = json.findPath("id").getTextValue(); // add id
+
 		String deviceType = json.findPath("device_type").getTextValue();
 		String deviceAgent = json.findPath("device_agent").getTextValue();
 		String networkAddress = json.findPath("network_address").getTextValue();
@@ -124,7 +126,7 @@ public class MetadataController extends Controller {
 				.getTextValue();
 		ArrayList<String> error = new ArrayList<String>();
 
-		boolean result = dbHandler.addDeviceNew(id,deviceType, deviceAgent,
+		boolean result = dbHandler.addDeviceNew(id, deviceType, deviceAgent,
 				networkAddress, locationDescription, latitude, longitude,
 				altitude, positionFormatSystem, userDefinedFields);
 
@@ -136,13 +138,13 @@ public class MetadataController extends Controller {
 			System.out.println("device saved");
 
 			ObjectNode msg = Json.newObject();
-			msg.put("message","device saved");
+			msg.put("message", "device saved");
 			return ok(msg);
 		} else {
 			System.out.println("some devices not saved: " + error.toString());
 
 			ObjectNode msg = Json.newObject();
-			msg.put("error","device not saved: "+error.toString());
+			msg.put("error", "device not saved: " + error.toString());
 			return ok(msg);
 		}
 	}
@@ -157,14 +159,25 @@ public class MetadataController extends Controller {
 		}
 
 		// Parse JSON FIle
-		String id = json.findPath("id").getTextValue(); //add id
-		
+		String id = json.findPath("id").getTextValue(); // add id
+
 		String sensorType = json.findPath("sensor_type").getTextValue();
+
+		// below are the code tweeked later
+		String manufacturer = json.findPath("manufacturer").getTextValue();
+		double version = json.findPath("version").getDoubleValue();
+		double maxValue = json.findPath("maxValue").getDoubleValue();
+		double minValue = json.findPath("minValue").getDoubleValue();
+		String unit = json.findPath("unit").getTextValue();
+		String interpreter = json.findPath("interpreter").getTextValue();
+
 		String userDefinedFields = json.findPath("user_defined_fields")
 				.getTextValue();
 		ArrayList<String> error = new ArrayList<String>();
 
-		boolean result = dbHandler.addSensorType(id,sensorType, userDefinedFields);
+		boolean result = dbHandler.addSensorType(id, sensorType, manufacturer,
+				version, maxValue, minValue, unit, interpreter,
+				userDefinedFields);
 
 		if (!result) {
 			error.add(sensorType);
@@ -174,14 +187,14 @@ public class MetadataController extends Controller {
 			System.out.println("sensor type saved");
 
 			ObjectNode msg = Json.newObject();
-			msg.put("message","sensor type saved");
+			msg.put("message", "sensor type saved");
 			return ok(msg);
 		} else {
 			System.out.println("some sensor types not saved: "
 					+ error.toString());
 
 			ObjectNode msg = Json.newObject();
-			msg.put("error","sensor type not saved "+error.toString());
+			msg.put("error", "sensor type not saved " + error.toString());
 			return ok(msg);
 		}
 	}
@@ -196,8 +209,8 @@ public class MetadataController extends Controller {
 		}
 
 		// Parse JSON FIle
-		String id = json.findPath("id").getTextValue(); //add id
-		
+		String id = json.findPath("id").getTextValue(); // add id
+
 		String printName = json.findPath("print_name").getTextValue();
 		String sensorType = json.findPath("sensor_type").getTextValue();
 		String deviceId = json.findPath("device_id").getTextValue();
@@ -205,8 +218,8 @@ public class MetadataController extends Controller {
 				.getTextValue();
 		ArrayList<String> error = new ArrayList<String>();
 
-		boolean result = dbHandler.addSensor(id,printName, sensorType, deviceId,
-				userDefinedFields);
+		boolean result = dbHandler.addSensor(id, printName, sensorType,
+				deviceId, userDefinedFields);
 
 		if (!result) {
 			error.add(sensorType);
@@ -216,13 +229,13 @@ public class MetadataController extends Controller {
 			System.out.println("sensor saved");
 
 			ObjectNode msg = Json.newObject();
-			msg.put("message","sensor saved");
+			msg.put("message", "sensor saved");
 			return ok(msg);
 		} else {
 			System.out.println("some sensors not saved: " + error.toString());
 
 			ObjectNode msg = Json.newObject();
-			msg.put("error","sensor not saved "+error.toString());
+			msg.put("error", "sensor not saved " + error.toString());
 			return ok(msg);
 		}
 	}
@@ -241,15 +254,15 @@ public class MetadataController extends Controller {
 
 		if (error.size() == 0) {
 			System.out.println("sensor type deleted");
-			
+
 			ObjectNode msg = Json.newObject();
-			msg.put("message","sensor type deleted");
+			msg.put("message", "sensor type deleted");
 			return ok(msg);
 		} else {
 			System.out.println("sensor type not deleted: " + error.toString());
-			
+
 			ObjectNode msg = Json.newObject();
-			msg.put("error","sensor type not deleted "+error.toString());
+			msg.put("error", "sensor type not deleted " + error.toString());
 			return ok(msg);
 		}
 	}
@@ -269,12 +282,12 @@ public class MetadataController extends Controller {
 		if (error.size() == 0) {
 			System.out.println("sensor deleted");
 			ObjectNode msg = Json.newObject();
-			msg.put("message","sensor deleted");
+			msg.put("message", "sensor deleted");
 			return ok(msg);
 		} else {
 			System.out.println("sensor not deleted: " + error.toString());
 			ObjectNode msg = Json.newObject();
-			msg.put("error","sensor not deleted "+error.toString());
+			msg.put("error", "sensor not deleted " + error.toString());
 			return ok(msg);
 		}
 	}
@@ -294,12 +307,12 @@ public class MetadataController extends Controller {
 		if (error.size() == 0) {
 			System.out.println("device type deleted");
 			ObjectNode msg = Json.newObject();
-			msg.put("message","device type deleted");
+			msg.put("message", "device type deleted");
 			return ok(msg);
 		} else {
 			System.out.println("device type not deleted: " + error.toString());
 			ObjectNode msg = Json.newObject();
-			msg.put("error","device type not deleted "+error.toString());
+			msg.put("error", "device type not deleted " + error.toString());
 			return ok(msg);
 		}
 	}
@@ -319,12 +332,12 @@ public class MetadataController extends Controller {
 		if (error.size() == 0) {
 			System.out.println("device deleted");
 			ObjectNode msg = Json.newObject();
-			msg.put("message","device deleted");
+			msg.put("message", "device deleted");
 			return ok(msg);
 		} else {
 			System.out.println("device not deleted: " + error.toString());
 			ObjectNode msg = Json.newObject();
-			msg.put("error","device not deleted "+error.toString());
+			msg.put("error", "device not deleted " + error.toString());
 			return ok(msg);
 		}
 	}
@@ -445,7 +458,7 @@ public class MetadataController extends Controller {
 
 		return ok(ret);
 	}
-	
+
 	// Get sensor by device id
 	public static Result getSensorByDeviceId(String deviceId, String format) {
 		if (!testDBHandler()) {
@@ -484,39 +497,39 @@ public class MetadataController extends Controller {
 	}
 
 	// Get all the device types
-		public static Result get_device_types(String format) {
-			if (!testDBHandler()) {
-				return internalServerError("database conf file not found");
-			}
-			response().setHeader("Access-Control-Allow-Origin", "*");
-			checkDao();
-			List<DeviceType> deviceTypes = deviceTypeDao.getAllDeviceTypes();
-			if (deviceTypes == null || deviceTypes.isEmpty()) {
-				ObjectNode notFoundMsg = Json.newObject();
-				notFoundMsg.put("message", "no reading found");
-				return notFound(notFoundMsg);
-			}
-			String ret = "";
-			if (format.equals("json")) {
-
-				for (DeviceType deviceType : deviceTypes) {
-					if (ret.isEmpty())
-						ret += "[";
-					else
-						ret += ',';
-					ret += deviceType.toJSONString();
-				}
-				ret += "]";
-			} else if (format.equals("csv")) {
-				for (DeviceType deviceType : deviceTypes) {
-					if (ret.isEmpty())
-						ret += deviceType.getCSVHeader();
-					else
-						ret += '\n';
-					ret += deviceType.toCSVString();
-				}
-			}
-
-			return ok(ret);
+	public static Result get_device_types(String format) {
+		if (!testDBHandler()) {
+			return internalServerError("database conf file not found");
 		}
+		response().setHeader("Access-Control-Allow-Origin", "*");
+		checkDao();
+		List<DeviceType> deviceTypes = deviceTypeDao.getAllDeviceTypes();
+		if (deviceTypes == null || deviceTypes.isEmpty()) {
+			ObjectNode notFoundMsg = Json.newObject();
+			notFoundMsg.put("message", "no reading found");
+			return notFound(notFoundMsg);
+		}
+		String ret = "";
+		if (format.equals("json")) {
+
+			for (DeviceType deviceType : deviceTypes) {
+				if (ret.isEmpty())
+					ret += "[";
+				else
+					ret += ',';
+				ret += deviceType.toJSONString();
+			}
+			ret += "]";
+		} else if (format.equals("csv")) {
+			for (DeviceType deviceType : deviceTypes) {
+				if (ret.isEmpty())
+					ret += deviceType.getCSVHeader();
+				else
+					ret += '\n';
+				ret += deviceType.toCSVString();
+			}
+		}
+
+		return ok(ret);
+	}
 }

@@ -129,8 +129,8 @@ public class DBHandler {
 		return resultStr;
 	}
 
-	public boolean addDeviceType(String deviceTypeKey,String deviceTypeName, String manufacturer,
-			String version, String userDefinedFields) {
+	public boolean addDeviceType(String deviceTypeKey, String deviceTypeName,
+			String manufacturer, String version, String userDefinedFields) {
 		Connection connection = getConnection();
 		if (connection == null)
 			return false;
@@ -161,9 +161,10 @@ public class DBHandler {
 		}
 	}
 
-	public boolean addDeviceNew(String GUID,String deviceType, String deviceAgent,
-			String networkAddress, String locationDescription, String latitude,
-			String longitude, String altitude, String positionFormatSystem,
+	public boolean addDeviceNew(String GUID, String deviceType,
+			String deviceAgent, String networkAddress,
+			String locationDescription, String latitude, String longitude,
+			String altitude, String positionFormatSystem,
 			String userDefinedFields) {
 		Connection connection = getConnection();
 		if (connection == null)
@@ -172,7 +173,7 @@ public class DBHandler {
 		try {
 			preparedStatement = connection
 					.prepareStatement("INSERT INTO CMU.NEW_DEVICES(GUID,DEVICE_TYPE,DEVICE_AGENT, NETWORK_ADDRESS, LOCATION_DESCRIPTION, LATITUDE, LONGITUDE, ALTITUDE, POSITION_FORMAT_SYSTEM, USER_DEFINED_FIELDS) VALUES(?,?,?,?,?,?,?,?,?,?)");
-			preparedStatement.setString(1,GUID);
+			preparedStatement.setString(1, GUID);
 			preparedStatement.setString(2, deviceType);
 			preparedStatement.setString(3, deviceAgent);
 			preparedStatement.setString(4, networkAddress);
@@ -200,17 +201,29 @@ public class DBHandler {
 		}
 	}
 
-	public boolean addSensorType(String GUID, String sensorType, String userDefinedFields) {
+	public boolean addSensorType(String GUID, String sensorType,
+			String manufacturer, double version, double maxValue,
+			double minValue, String unit, String interpreter,
+			String userDefinedFields) {
 		Connection connection = getConnection();
 		if (connection == null)
 			return false;
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("INSERT INTO CMU.NEW_SENSOR_TYPES(GUID, SENSOR_CATEGORY, USER_DEFINED_FIELDS) VALUES(?,?,?)");
+					.prepareStatement("INSERT INTO CMU.NEW_SENSOR_TYPES(GUID, SENSOR_CATEGORY, "
+							+ "MANUFACTURER, VERSION, MAX_VALUE, MIN_VALUE, "
+							+ "UNIT, INTERPRETER, USER_DEFINED_FIELDS) VALUES(?,?,?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, GUID);
 			preparedStatement.setString(2, sensorType);
-			preparedStatement.setString(3, userDefinedFields);
+			preparedStatement.setString(3, manufacturer);
+			preparedStatement.setDouble(4, version);
+			preparedStatement.setDouble(5, maxValue);
+			preparedStatement.setDouble(6, minValue);
+			preparedStatement.setString(7, unit);
+			preparedStatement.setString(8, interpreter);
+			
+			preparedStatement.setString(9, userDefinedFields);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");
@@ -773,7 +786,7 @@ public class DBHandler {
 				String endTime = resultSet.getString(3);
 				String eventTypeName = resultSet.getString(4);
 				String eventRecord = resultSet.getString(5);
-				if (eventTypeName==null || eventTypeName=="") {
+				if (eventTypeName == null || eventTypeName == "") {
 					continue;
 				}
 				events.add(new Event(userId, eventTypeId, dateString,
