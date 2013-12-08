@@ -9,7 +9,7 @@ public class Device {
 	private String deviceType;
 	private String deviceAgent;
 	private String deviceLocation;
-	
+	private String userDefinedFields;
 	
 	public Device(){
 		dbHandler = new DBHandler("conf/database.properties");	
@@ -55,11 +55,11 @@ public class Device {
 	}
 		
 	public String getCSVHeader() {
-		return "uri,device_type,device_agent,device_location\n";
+		return "uri,device_type,device_agent,device_location,user_defined_fields\n";
 	}
 	
 	public String toCSVString() {
-		return deviceId + "," + deviceType + "," + deviceAgent + "," + deviceLocation;
+		return deviceId + "," + deviceType + "," + deviceAgent + "," + deviceLocation+","+userDefinedFields;
 	}
 	
 	public String toJSONString() {
@@ -70,6 +70,7 @@ public class Device {
 			obj.put("device_type", deviceType);
 			obj.put("device_agent", deviceAgent);
 			obj.put("device_location", deviceLocation);
+			obj.put("user_defined_fields", userDefinedFields);
 			jsonString = obj.toString();
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -90,5 +91,13 @@ public class Device {
 		}
 		return dbHandler.addDevice(deviceId, deviceType, deviceAgent, deviceLocation);
 
+	}
+
+	public String getUserDefinedFields() {
+		return userDefinedFields;
+	}
+
+	public void setUserDefinedFields(String userDefinedFields) {
+		this.userDefinedFields = userDefinedFields;
 	}
 }

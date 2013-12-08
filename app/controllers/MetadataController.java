@@ -111,7 +111,8 @@ public class MetadataController extends Controller {
 
 		// Parse JSON FIle
 		String id = json.findPath("id").getTextValue(); // add id
-
+		
+		String uri = json.findPath("uri").getTextValue(); // which is missing 
 		String deviceType = json.findPath("device_type").getTextValue();
 		String deviceAgent = json.findPath("device_agent").getTextValue();
 		String networkAddress = json.findPath("network_address").getTextValue();
@@ -126,7 +127,7 @@ public class MetadataController extends Controller {
 				.getTextValue();
 		ArrayList<String> error = new ArrayList<String>();
 
-		boolean result = dbHandler.addDeviceNew(id, deviceType, deviceAgent,
+		boolean result = dbHandler.addDeviceNew(id, uri, deviceType, deviceAgent,
 				networkAddress, locationDescription, latitude, longitude,
 				altitude, positionFormatSystem, userDefinedFields);
 

@@ -161,7 +161,7 @@ public class DBHandler {
 		}
 	}
 
-	public boolean addDeviceNew(String GUID, String deviceType,
+	public boolean addDeviceNew(String GUID, String uri, String deviceType,
 			String deviceAgent, String networkAddress,
 			String locationDescription, String latitude, String longitude,
 			String altitude, String positionFormatSystem,
@@ -172,17 +172,18 @@ public class DBHandler {
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection
-					.prepareStatement("INSERT INTO CMU.NEW_DEVICES(GUID,DEVICE_TYPE,DEVICE_AGENT, NETWORK_ADDRESS, LOCATION_DESCRIPTION, LATITUDE, LONGITUDE, ALTITUDE, POSITION_FORMAT_SYSTEM, USER_DEFINED_FIELDS) VALUES(?,?,?,?,?,?,?,?,?,?)");
+					.prepareStatement("INSERT INTO CMU.NEW_DEVICES(GUID,URI, DEVICE_TYPE,DEVICE_AGENT, NETWORK_ADDRESS, LOCATION_DESCRIPTION, LATITUDE, LONGITUDE, ALTITUDE, POSITION_FORMAT_SYSTEM, USER_DEFINED_FIELDS) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, GUID);
-			preparedStatement.setString(2, deviceType);
-			preparedStatement.setString(3, deviceAgent);
-			preparedStatement.setString(4, networkAddress);
-			preparedStatement.setString(5, locationDescription);
-			preparedStatement.setString(6, latitude);
-			preparedStatement.setString(7, longitude);
-			preparedStatement.setString(8, altitude);
-			preparedStatement.setString(9, positionFormatSystem);
-			preparedStatement.setString(10, userDefinedFields);
+			preparedStatement.setString(2, uri);
+			preparedStatement.setString(3, deviceType);
+			preparedStatement.setString(4, deviceAgent);
+			preparedStatement.setString(5, networkAddress);
+			preparedStatement.setString(6, locationDescription);
+			preparedStatement.setString(7, latitude);
+			preparedStatement.setString(8, longitude);
+			preparedStatement.setString(9, altitude);
+			preparedStatement.setString(10, positionFormatSystem);
+			preparedStatement.setString(11, userDefinedFields);
 			preparedStatement.executeUpdate();
 			connection.close();
 			// System.out.println("Connection closed.");

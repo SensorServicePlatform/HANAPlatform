@@ -15,8 +15,8 @@ GET     /get_devices/json     controllers.DeviceController.getDevice(format: Str
 GET     /get_sensor_types/:deviceType controllers.DeviceController.getSensorType(deviceType: String, format: String = "csv")
 GET     /get_sensor_types/:deviceType/csv controllers.DeviceController.getSensorType(deviceType: String, format: String = "csv")
 GET     /get_sensor_types/:deviceType/json controllers.DeviceController.getSensorType(deviceType: String, format: String = "json")
-POST    /device               controllers.DeviceController.add()
-POST    /device/              controllers.DeviceController.add()
+#POST    /device               controllers.DeviceController.add()
+#POST    /device/              controllers.DeviceController.add()
 
 # SensorReading
 GET		/sensors/:deviceId/:timeStamp/:sensorType			controllers.SensorReadingController.searchAtTime(deviceId: String, timeStamp: String, sensorType: String, format: String = "csv")
